@@ -15,7 +15,7 @@
 1. Клонування репозиторію:
 ``` bash
 git clone https://github.com/joe1i/WEBTECH-lab-1.git
-cd comment-system-api
+cd WEBTECH-lab-1
 ``` 
 2. Створення віртуального середовища:
 ``` bash
@@ -29,10 +29,16 @@ pip install -r requirements.txt
 ``` 
 4. Міграції бази даних:
 ``` bash
+python manage.py makemigrations users announcements reactions
 python manage.py migrate
 python manage.py createsuperuser
 ```
 5. Запуск сервера:
 ``` bash
 python manage.py runserver
+```
+
+6. (Опціонально) Наповнити базу тестовими даними:
+``` bash
+python manage.py populate_db
 ```

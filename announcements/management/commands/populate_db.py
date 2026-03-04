@@ -6,18 +6,17 @@ from reactions.models import Reaction
 from faker import Faker
 
 User = get_user_model()
-fake = Faker('uk_UA')  # Генеруємо дані українською
+fake = Faker('uk_UA')
 
 
 class Command(BaseCommand):
-    help = 'Наповнює базу даних тестовими користувачами, оголошеннями та реакціями'
+    help = 'Populate database with test data'
 
     def handle(self, *args, **options):
-        self.stdout.write('Починаємо генерацію даних...')
+        self.stdout.write('Creating test data...')
 
-        # 1. Створення звичайних користувачів
         users = []
-        for _ in range(15):  # Створимо 15 користувачів
+        for _ in range(15):
             gender = random.choice(['M', 'F', 'O'])
             user = User.objects.create_user(
                 email=fake.unique.email(),
@@ -30,9 +29,7 @@ class Command(BaseCommand):
                 password='testpassword123'
             )
             users.append(user)
-        self.stdout.write(self.style.SUCCESS(f'Створено 15 користувачів.'))
 
-        # 2. Отримання або створення адміністратора (автора оголошень)
         admin_user, created = User.objects.get_or_create(
             email='admin@example.com',
             defaults={
@@ -47,9 +44,8 @@ class Command(BaseCommand):
             admin_user.set_password('adminpass123')
             admin_user.save()
 
-        # 3. Створення оголошень
         announcements = []
-        for _ in range(10):  # Створимо 10 оголошень
+        for _ in range(10):
             announcement = Announcement.objects.create(
                 title=fake.sentence(nb_words=5),
                 content=fake.text(max_nb_chars=1000),
@@ -57,14 +53,10 @@ class Command(BaseCommand):
                 views_count=random.randint(10, 100)
             )
             announcements.append(announcement)
-        self.stdout.write(self.style.SUCCESS(f'Створено 10 оголошень.'))
 
-        # 4. Створення реакцій (імітація активності)
         reaction_types = ['like', 'heart', 'fire', 'sad']
-        reactions_created = 0
 
         for announcement in announcements:
-            # Вибираємо випадкову кількість користувачів (від 3 до 10), які залишать реакцію на це оголошення
             reacting_users = random.sample(users, random.randint(3, 10))
             for user in reacting_users:
                 Reaction.objects.create(
@@ -72,7 +64,5 @@ class Command(BaseCommand):
                     user=user,
                     reaction_type=random.choice(reaction_types)
                 )
-                reactions_created += 1
 
-        self.stdout.write(self.style.SUCCESS(f'Створено {reactions_created} реакцій.'))
-        self.stdout.write(self.style.SUCCESS('Базу даних успішно наповнено!'))
+        self.stdout.write(self.style.SUCCESS('Successfully created test data'))

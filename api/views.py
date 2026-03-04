@@ -18,7 +18,7 @@ User = get_user_model()
 
 class IsAdminOrReadOnly(permissions.BasePermission):
     """
-    Кастомний дозвіл для перевірки прав доступу.
+    Дозвіл для перевірки прав доступу.
 
     - Дозволяє безпечні методи (GET, HEAD, OPTIONS) для всіх користувачів (навіть неавторизованих).
     - Дозволяє створення, редагування та видалення (POST, PUT, PATCH, DELETE) тільки для адміністраторів (is_staff=True).

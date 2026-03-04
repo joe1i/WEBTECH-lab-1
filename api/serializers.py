@@ -6,8 +6,6 @@ from reactions.models import Reaction
 User = get_user_model()
 
 
-# --- СЕРІАЛІЗАТОРИ КОРИСТУВАЧА ---
-
 class UserRegistrationSerializer(serializers.ModelSerializer):
     """Серіалізатор для реєстрації користувача"""
     password = serializers.CharField(write_only=True, min_length=8)
@@ -24,7 +22,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop('password_confirm')
-        # Встановлюємо email як username, оскільки ми змінили USERNAME_FIELD
         validated_data['username'] = validated_data['email']
         password = validated_data.pop('password')
         user = User.objects.create_user(**validated_data)
@@ -64,8 +61,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
                   'created_at']
         read_only_fields = ['id', 'email', 'created_at']
 
-
-# --- СЕРІАЛІЗАТОРИ КАНАЛУ ---
 
 class ReactionSerializer(serializers.ModelSerializer):
     """Серіалізатор для відправки реакції"""

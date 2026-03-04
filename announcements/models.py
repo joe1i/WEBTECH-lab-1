@@ -3,7 +3,7 @@ from django.conf import settings
 
 
 class Announcement(models.Model):
-    """Модель оголошення (поста) в каналі"""
+    """Модель оголошення в каналі"""
 
     title = models.CharField(max_length=200, verbose_name='Заголовок')
     content = models.TextField(verbose_name='Текст оголошення')
@@ -25,7 +25,7 @@ class Announcement(models.Model):
     class Meta:
         verbose_name = 'Оголошення'
         verbose_name_plural = 'Оголошення'
-        ordering = ['-created_at']  # Найновіші зверху
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.title
