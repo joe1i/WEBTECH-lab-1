@@ -13,7 +13,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name', 'gender', 'birth_date', 'password', 'password_confirm']
+        fields = ['username', 'email', 'first_name', 'last_name', 'gender', 'birth_date', 'password', 'password_confirm']
 
     def validate(self, data):
         if data['password'] != data['password_confirm']:
@@ -22,7 +22,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop('password_confirm')
-        validated_data['username'] = validated_data['email']
         password = validated_data.pop('password')
         user = User.objects.create_user(**validated_data)
         user.set_password(password)
@@ -57,7 +56,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'full_name', 'first_name', 'last_name', 'gender', 'birth_date', 'avatar', 'bio',
+        fields = ['id', 'username', 'email', 'full_name', 'first_name', 'last_name', 'gender', 'birth_date', 'avatar', 'bio',
                   'created_at']
         read_only_fields = ['id', 'email', 'created_at']
 
@@ -72,14 +71,16 @@ class ReactionSerializer(serializers.ModelSerializer):
 
 class AnnouncementSerializer(serializers.ModelSerializer):
     """Серіалізатор для оголошень"""
+    author_username = serializers.CharField(source='author.username', read_only=True)
     author_name = serializers.CharField(source='author.full_name', read_only=True)
+    author_avatar = serializers.ImageField(source='author.avatar', read_only=True)
     reactions_summary = serializers.SerializerMethodField()
     user_reaction = serializers.SerializerMethodField()
 
     class Meta:
         model = Announcement
         fields = [
-            'id', 'title', 'content', 'image', 'author_name',
+            'id', 'title', 'content', 'image', 'author_username', 'author_name', 'author_avatar',
             'views_count', 'created_at', 'reactions_summary', 'user_reaction'
         ]
         read_only_fields = ['id', 'views_count', 'created_at', 'author_name']

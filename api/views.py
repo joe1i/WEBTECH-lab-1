@@ -223,5 +223,5 @@ def app_info_view(request):
             'Система реакцій (лайки, вогонь, серце тощо)'
         ],
         'author': '1i',
-        'contact': '@telegram_username'
+        'contact': '@Joe_1i'
     })
