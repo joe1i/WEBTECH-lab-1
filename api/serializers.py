@@ -86,7 +86,6 @@ class AnnouncementSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'views_count', 'created_at', 'author_name']
 
     def get_reactions_summary(self, obj):
-        """Рахуємо кількість кожної з реакцій для поста"""
         reactions = obj.reactions.all()
         return {
             'like': reactions.filter(reaction_type='like').count(),
@@ -96,7 +95,6 @@ class AnnouncementSerializer(serializers.ModelSerializer):
         }
 
     def get_user_reaction(self, obj):
-        """Показує, яку реакцію залишив поточний користувач (якщо авторизований)"""
         request = self.context.get('request')
         if request and request.user.is_authenticated:
             reaction = obj.reactions.filter(user=request.user).first()

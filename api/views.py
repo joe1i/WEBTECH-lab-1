@@ -17,13 +17,6 @@ User = get_user_model()
 
 
 class IsAdminOrReadOnly(permissions.BasePermission):
-    """
-    Дозвіл для перевірки прав доступу.
-
-    - Дозволяє безпечні методи (GET, HEAD, OPTIONS) для всіх користувачів (навіть неавторизованих).
-    - Дозволяє створення, редагування та видалення (POST, PUT, PATCH, DELETE) тільки для адміністраторів (is_staff=True).
-    """
-
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
@@ -61,7 +54,7 @@ class UserRegistrationView(generics.CreateAPIView):
 
 class UserLoginView(generics.GenericAPIView):
     """
-    Вхід існуючого користувача в систему (Авторизація).
+    Вхід користувача в систему.
 
     Очікує обов'язкові поля:
     - email
@@ -86,7 +79,7 @@ class UserLoginView(generics.GenericAPIView):
 
 class UserProfileView(generics.RetrieveUpdateAPIView):
     """
-    Перегляд та редагування власного профілю користувача.
+    Перегляд та редагування профілю користувача.
 
     - Повертає інформацію про профіль поточного авторизованого користувача.
     - Оновлює особисті дані.
@@ -107,10 +100,7 @@ class AnnouncementListView(generics.ListCreateAPIView):
     - Повертає список всіх активних оголошень.
     - Створює нове оголошення. Доступно тільки адміністраторам.
 
-    Підтримує сортування та фільтрацію:
-    - Сортування за кількістю реакції (?ordering=-likes_count)
-    - Фільтрація оголошень за реакією (?has_reaction=sad)
-    - Фільтрація оголошень за мінімальною кількістю реакії (?min_likes=5)
+    Підтримує сортування та фільтрацію.
     """
     serializer_class = AnnouncementSerializer
     permission_classes = [IsAdminOrReadOnly]

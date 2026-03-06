@@ -28,7 +28,6 @@ class Reaction(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата створення')
 
     class Meta:
-        # Обмеження: один юзер = одна реакція на один пост
         unique_together = ('announcement', 'user')
         verbose_name = 'Реакція'
         verbose_name_plural = 'Реакції'

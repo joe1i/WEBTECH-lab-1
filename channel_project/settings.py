@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     # Third party apps
     'rest_framework',
-    'rest_framework.authtoken',  # Додано для авторизації за токенами
+    'rest_framework.authtoken',
     'corsheaders',
     'drf_spectacular',
     'django_extensions',

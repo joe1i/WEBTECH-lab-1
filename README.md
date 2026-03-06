@@ -42,3 +42,8 @@ python manage.py runserver
 ``` bash
 python manage.py populate_db
 ```
+Дані тестового адміна для входу:
+``` bash
+email: admin@example.com
+password: adminpass123
+```
