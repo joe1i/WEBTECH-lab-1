@@ -203,7 +203,7 @@ def app_info_view(request):
     Отримання загальної інформації про додаток.
     """
     return Response({
-        'name': 'Announcement Channel',
+        'name': 'Канал Оголошень',
         'version': '1.0.0',
         'description': 'Канал оголошень, де адміністратор створює пости, а користувачі можуть залишати реакції.',
         'features': [

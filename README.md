@@ -5,7 +5,7 @@
 **Лабораторна робота:** №1 - Розробка серверної частини Web-додатка  
 
 ## Опис завдання
-Розробити серверну частину Web-додатку для системи коментарів з використанням Django та Django REST Framework.
+Розробити серверну частину Web-додатку для каналу оголошень з використанням Django та Django REST Framework.
 
 ## Посилання на звіт
 [Звіт на Google Drive](https://docs.google.com/document/d/142VclMyO0cFKi8ZL7n6l71CryjKLeWyfit9AUIe8Mbg/edit?usp=sharing)
